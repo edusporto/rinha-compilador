@@ -1,0 +1,3 @@
+[submodule "rinha-de-compiler"]
+	path = rinha-de-compiler
+	url = git@github.com:aripiprazole/rinha-de-compiler.git
