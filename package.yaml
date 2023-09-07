@@ -20,9 +20,10 @@ description:         Please see the README on GitHub at <https://github.com/edus
 
 dependencies:
 - base >= 4.7 && < 5
-- containers
 - text
 - aeson
+- containers
+- interpolate
 - template-haskell
 
 default-extensions:
@@ -32,6 +33,8 @@ default-extensions:
 - LambdaCase
 - TemplateHaskell
 - MultiWayIf
+- QuasiQuotes
+- StandaloneDeriving
 
 ghc-options:
 - -Wall

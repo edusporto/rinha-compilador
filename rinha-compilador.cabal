@@ -27,9 +27,9 @@ library
       Interpreter.Env
       Interpreter.Evaluator
       Lib
+      Syntax.Expr
       Syntax.Operations
       Syntax.Program
-      Syntax.Term
       Syntax.Value
   other-modules:
       Paths_rinha_compilador
@@ -42,11 +42,14 @@ library
       LambdaCase
       TemplateHaskell
       MultiWayIf
+      QuasiQuotes
+      StandaloneDeriving
   ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints
   build-depends:
       aeson
     , base >=4.7 && <5
     , containers
+    , interpolate
     , template-haskell
     , text
   default-language: Haskell2010
@@ -64,11 +67,14 @@ executable rinha-compilador-exe
       LambdaCase
       TemplateHaskell
       MultiWayIf
+      QuasiQuotes
+      StandaloneDeriving
   ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       aeson
     , base >=4.7 && <5
     , containers
+    , interpolate
     , rinha-compilador
     , template-haskell
     , text
@@ -88,11 +94,14 @@ test-suite rinha-compilador-test
       LambdaCase
       TemplateHaskell
       MultiWayIf
+      QuasiQuotes
+      StandaloneDeriving
   ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       aeson
     , base >=4.7 && <5
     , containers
+    , interpolate
     , rinha-compilador
     , template-haskell
     , text
