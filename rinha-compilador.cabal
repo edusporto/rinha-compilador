@@ -6,33 +6,49 @@ cabal-version: 1.12
 
 name:           rinha-compilador
 version:        0.1.0.0
-description:    Please see the README on GitHub at <https://github.com/githubuser/rinha-compilador#readme>
-homepage:       https://github.com/githubuser/rinha-compilador#readme
-bug-reports:    https://github.com/githubuser/rinha-compilador/issues
-author:         Author name here
-maintainer:     example@example.com
-copyright:      2023 Author name here
+description:    Please see the README on GitHub at <https://github.com/edusporto/rinha-compilador>
+homepage:       https://github.com/edusporto/rinha-compilador#readme
+bug-reports:    https://github.com/edusporto/rinha-compilador/issues
+author:         Eduardo Sandalo Porto
+maintainer:     edu@sandalo.dev
+copyright:      2023 Eduardo Sandalo Porto
 license:        BSD3
 license-file:   LICENSE
 build-type:     Simple
 extra-source-files:
     README.md
-    CHANGELOG.md
 
 source-repository head
   type: git
-  location: https://github.com/githubuser/rinha-compilador
+  location: https://github.com/edusporto/rinha-compilador
 
 library
   exposed-modules:
+      Interpreter.Env
+      Interpreter.Evaluator
       Lib
+      Syntax.Operations
+      Syntax.Program
+      Syntax.Term
+      Syntax.Value
   other-modules:
       Paths_rinha_compilador
   hs-source-dirs:
       src
+  default-extensions:
+      OverloadedStrings
+      DeriveGeneric
+      DeriveAnyClass
+      LambdaCase
+      TemplateHaskell
+      MultiWayIf
   ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints
   build-depends:
-      base >=4.7 && <5
+      aeson
+    , base >=4.7 && <5
+    , containers
+    , template-haskell
+    , text
   default-language: Haskell2010
 
 executable rinha-compilador-exe
@@ -41,10 +57,21 @@ executable rinha-compilador-exe
       Paths_rinha_compilador
   hs-source-dirs:
       app
+  default-extensions:
+      OverloadedStrings
+      DeriveGeneric
+      DeriveAnyClass
+      LambdaCase
+      TemplateHaskell
+      MultiWayIf
   ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -threaded -rtsopts -with-rtsopts=-N
   build-depends:
-      base >=4.7 && <5
+      aeson
+    , base >=4.7 && <5
+    , containers
     , rinha-compilador
+    , template-haskell
+    , text
   default-language: Haskell2010
 
 test-suite rinha-compilador-test
@@ -54,8 +81,19 @@ test-suite rinha-compilador-test
       Paths_rinha_compilador
   hs-source-dirs:
       test
+  default-extensions:
+      OverloadedStrings
+      DeriveGeneric
+      DeriveAnyClass
+      LambdaCase
+      TemplateHaskell
+      MultiWayIf
   ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -threaded -rtsopts -with-rtsopts=-N
   build-depends:
-      base >=4.7 && <5
+      aeson
+    , base >=4.7 && <5
+    , containers
     , rinha-compilador
+    , template-haskell
+    , text
   default-language: Haskell2010
