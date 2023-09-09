@@ -101,6 +101,7 @@ test-suite rinha-compilador-test
       aeson
     , base >=4.7 && <5
     , containers
+    , hunit
     , interpolate
     , rinha-compilador
     , template-haskell

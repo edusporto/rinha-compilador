@@ -8,7 +8,7 @@ module Interpreter.Evaluator (eval) where
 
 import Data.String.Interpolate.IsString (i)
 import Interpreter.Env (Env, extend, lookup)
-import Syntax.Expr (Expr (..))
+import Syntax.Expr (Expr (..), Parameter (..))
 import Syntax.Operations (BinaryOp (..))
 import Syntax.Value (Value (..))
 
@@ -26,15 +26,14 @@ eval env expr = case expr of
           _ -> error [i|Can't call "#{closure}"|]
   Binary lhs op rhs -> treatBinary op (eval env lhs) (eval env rhs)
   Function parameters value ->
-    let getVar var = case var of
-          Var name -> name
-          _ -> error [i|expected variable, got "#{var}"|]
-        argNames = map getVar parameters
+    let argNames = map text parameters
      in Closure argNames value env
-  Let name value next ->
-    -- This one is pretty cool!
-    -- `Let` can be implemented as syntactic sugar for `Function` and `Call`.
-    eval env (Call (Function [name] next) [value])
+  Let (Parameter name) value next ->
+    let closure = eval env value
+     in case closure of
+          Closure argNames body oldEnv ->
+            let newClos = Closure argNames body (extend (name, newClos) oldEnv)
+             in eval (Syntax.Value.envClos newClos) next
   If condition thenBody elseBody ->
     let condResult = eval env condition
      in case condResult of
@@ -75,5 +74,4 @@ treatBinary Lte (Num l) (Num r) = Boolean (l <= r)
 treatBinary Gte (Num l) (Num r) = Boolean (l >= r)
 treatBinary And (Boolean l) (Boolean r) = Boolean (l && r)
 treatBinary Or (Boolean l) (Boolean r) = Boolean (l || r)
-treatBinary Not (Boolean _) (Boolean _) = undefined -- TODO: change according to new specs
 treatBinary op l r = error [i|Invalid op "#{op}" for "#{l}" and "#{r}"|]

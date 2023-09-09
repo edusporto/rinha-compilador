@@ -71,3 +71,4 @@ tests:
     - -with-rtsopts=-N
     dependencies:
     - rinha-compilador
+    - hunit

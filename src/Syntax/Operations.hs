@@ -31,8 +31,6 @@ data BinaryOp
     And
   | -- | Logical or
     Or
-  | -- | Logical not
-    Not
   deriving (Show, Eq, Generic, Read)
 
 instance FromJSON BinaryOp where
