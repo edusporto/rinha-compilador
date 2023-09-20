@@ -71,4 +71,6 @@ tests:
     - -with-rtsopts=-N
     dependencies:
     - rinha-compilador
-    - hunit
+    - tasty
+    - tasty-hunit
+    - bytestring

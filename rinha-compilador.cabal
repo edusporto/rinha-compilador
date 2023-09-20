@@ -84,6 +84,8 @@ test-suite rinha-compilador-test
   type: exitcode-stdio-1.0
   main-is: Spec.hs
   other-modules:
+      Test.FromFile
+      Test.Syntax
       Paths_rinha_compilador
   hs-source-dirs:
       test
@@ -100,10 +102,12 @@ test-suite rinha-compilador-test
   build-depends:
       aeson
     , base >=4.7 && <5
+    , bytestring
     , containers
-    , hunit
     , interpolate
     , rinha-compilador
+    , tasty
+    , tasty-hunit
     , template-haskell
     , text
   default-language: Haskell2010

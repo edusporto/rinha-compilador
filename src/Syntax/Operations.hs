@@ -2,7 +2,6 @@ module Syntax.Operations (BinaryOp (..)) where
 
 import Data.Aeson
 import GHC.Generics (Generic)
-import Text.Read (readMaybe)
 
 data BinaryOp
   = -- | Addition
@@ -33,14 +32,6 @@ data BinaryOp
     Or
   deriving (Show, Eq, Generic, Read)
 
-instance FromJSON BinaryOp where
-  parseJSON = withObject "BinaryOp" $ \obj -> do
-    kind <- obj .: "op"
-    case readMaybe kind of
-      Nothing -> fail "invalid BinaryOp"
-      Just op -> return op
+instance FromJSON BinaryOp
 
 instance ToJSON BinaryOp
-
--- >>> eitherDecode "{\"op\": \"Gt\"}" :: Either String BinaryOp
--- Right Gt
