@@ -1,3 +1,4 @@
+import Test.Evaluator (evalTests)
 import Test.Syntax (syntaxTests)
 import Test.Tasty
 
@@ -11,5 +12,6 @@ unitTests :: TestTree
 unitTests =
   testGroup
     "Unit tests"
-    [ testGroup "Syntax testing" syntaxTests
+    [ testGroup "Syntax testing" syntaxTests,
+      testGroup "Evaluation testing" evalTests
     ]
