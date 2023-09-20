@@ -5,6 +5,7 @@ module Interpreter.Env
     Binding,
     extend,
     Interpreter.Env.lookup,
+    empty,
   )
 where
 
@@ -13,10 +14,7 @@ import Data.Text (Text)
 import {-# SOURCE #-} Syntax.Value (Value)
 
 newtype Env = Env {getMap :: M.Map Text Value}
-
-deriving instance Show Env
-
-deriving instance Eq Env
+  deriving (Show, Eq)
 
 type Binding = (Text, Value)
 
@@ -25,3 +23,6 @@ extend (name, value) (Env map) = Env (M.insert name value map)
 
 lookup :: Text -> Env -> Maybe Value
 lookup name (Env map) = M.lookup name map
+
+empty :: Env
+empty = Env M.empty

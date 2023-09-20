@@ -24,9 +24,9 @@ source-repository head
 
 library
   exposed-modules:
+      Interpreter
       Interpreter.Env
       Interpreter.Evaluator
-      Lib
       Syntax.Expr
       Syntax.Operations
       Syntax.Program
@@ -48,10 +48,13 @@ library
   build-depends:
       aeson
     , base >=4.7 && <5
+    , bytestring
     , containers
     , interpolate
+    , mtl
     , template-haskell
     , text
+    , text-show
   default-language: Haskell2010
 
 executable rinha-compilador-exe
@@ -73,17 +76,21 @@ executable rinha-compilador-exe
   build-depends:
       aeson
     , base >=4.7 && <5
+    , bytestring
     , containers
     , interpolate
+    , mtl
     , rinha-compilador
     , template-haskell
     , text
+    , text-show
   default-language: Haskell2010
 
 test-suite rinha-compilador-test
   type: exitcode-stdio-1.0
   main-is: Spec.hs
   other-modules:
+      Test.Evaluator
       Test.FromFile
       Test.Syntax
       Paths_rinha_compilador
@@ -105,9 +112,11 @@ test-suite rinha-compilador-test
     , bytestring
     , containers
     , interpolate
+    , mtl
     , rinha-compilador
     , tasty
     , tasty-hunit
     , template-haskell
     , text
+    , text-show
   default-language: Haskell2010
