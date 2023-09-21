@@ -38,6 +38,7 @@ default-extensions:
 - MultiWayIf
 - QuasiQuotes
 - StandaloneDeriving
+- ScopedTypeVariables
 
 ghc-options:
 - -Wall
@@ -58,6 +59,7 @@ executables:
     main:                Main.hs
     source-dirs:         app
     ghc-options:
+    - -O2
     - -threaded
     - -rtsopts
     - -with-rtsopts=-N

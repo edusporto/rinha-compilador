@@ -1,8 +1,4 @@
-module Interpreter
-  ( someFunc,
-    interpret,
-  )
-where
+module Interpreter (interpret) where
 
 import Control.Monad.Writer (runWriter)
 import Data.Aeson (eitherDecode)
@@ -12,9 +8,6 @@ import qualified Interpreter.Env as Env
 import Interpreter.Evaluator
 import Syntax.Program
 import Syntax.Value
-
-someFunc :: IO ()
-someFunc = putStrLn "someFunc"
 
 interpret :: BL.ByteString -> Either String (Value, [T.Text])
 interpret jsonCode =
