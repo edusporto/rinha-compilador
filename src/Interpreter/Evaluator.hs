@@ -72,12 +72,15 @@ eval env expr = case expr of
 
 treatBinary :: BinaryOp -> Value -> Value -> Value
 treatBinary Add (Num l) (Num r) = Num (l + r)
+treatBinary Add (String l) (Num r) = String (l <> showt r)
+treatBinary Add (Num l) (String r) = String (showt l <> r)
+treatBinary Add (String l) (String r) = String (l <> r)
 treatBinary Sub (Num l) (Num r) = Num (l - r)
 treatBinary Mul (Num l) (Num r) = Num (l * r)
 treatBinary Div (Num l) (Num r) = Num (l `div` r)
 treatBinary Rem (Num l) (Num r) = Num (l `mod` r)
-treatBinary Eq (Num l) (Num r) = Boolean (l == r)
-treatBinary Neq (Num l) (Num r) = Boolean (l /= r)
+treatBinary Eq l r = Boolean (l == r)
+treatBinary Neq l r = Boolean (l /= r)
 treatBinary Lt (Num l) (Num r) = Boolean (l < r)
 treatBinary Gt (Num l) (Num r) = Boolean (l > r)
 treatBinary Lte (Num l) (Num r) = Boolean (l <= r)

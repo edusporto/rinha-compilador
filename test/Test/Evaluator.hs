@@ -7,6 +7,7 @@ import Interpreter (interpret)
 import qualified Interpreter.Env as Env
 import Interpreter.Evaluator
 import Syntax.Expr
+import Syntax.Operations
 import Syntax.Value
 import Test.FromFile (testWithFileContent)
 import Test.Tasty
@@ -20,6 +21,10 @@ evalTests =
       run
         (Let (Parameter "_") (Print (Str "hi")) (Print (Str "there")))
         @?= (String "there", ["hi", "there"]),
+    testCase "String equality" $
+      run (Binary (Str "hi") Eq (Str "hi")) @?= (Boolean True, []),
+    testCase "Binary inequality" $
+      run (Binary (Bool True) Neq (Bool False)) @?= (Boolean True, []),
     programEvaluationTest
       "Fibonacci"
       "rinha-de-compiler/files/fib.json"
