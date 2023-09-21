@@ -1,8 +1,4 @@
-{-# OPTIONS_GHC -Wno-incomplete-patterns #-}
 {-# OPTIONS_GHC -Wno-name-shadowing #-}
-{-# OPTIONS_GHC -Wno-unrecognised-pragmas #-}
-
-{-# HLINT ignore "Use lambda-case" #-}
 
 module Interpreter.Evaluator (eval) where
 
@@ -15,7 +11,7 @@ import Syntax.Operations (BinaryOp (..))
 import Syntax.Value (Value (..))
 import TextShow
 
-eval :: Env -> Expr -> Writer T.Text Value
+eval :: Env -> Expr -> Writer [T.Text] Value
 eval env expr = case expr of
   Int val -> return $ Num val
   Str val -> return $ String val
@@ -35,11 +31,12 @@ eval env expr = case expr of
     let argNames = map text parameters
      in return $ Closure argNames value env
   Let (Parameter name) value next -> do
-    closure <- eval env value
-    case closure of
+    evaluated <- eval env value
+    case evaluated of
       Closure argNames body oldEnv ->
         let newClos = Closure argNames body (extend (name, newClos) oldEnv)
          in eval (Syntax.Value.envClos newClos) next
+      _ -> eval (extend (name, evaluated) env) next
   If condition thenBody elseBody -> do
     condResult <- eval env condition
     case condResult of
@@ -50,7 +47,7 @@ eval env expr = case expr of
       _ -> error [i|`if` condition is not a boolean: "#{condResult}"|]
   Print expr -> do
     value <- eval env expr
-    tell (showt value)
+    tell [showt value]
     return value
   First value -> do
     result <- eval env value
@@ -75,7 +72,8 @@ eval env expr = case expr of
 
 treatBinary :: BinaryOp -> Value -> Value -> Value
 treatBinary Add (Num l) (Num r) = Num (l + r)
-treatBinary Mul (Num l) (Num r) = Num (l - r)
+treatBinary Sub (Num l) (Num r) = Num (l - r)
+treatBinary Mul (Num l) (Num r) = Num (l * r)
 treatBinary Div (Num l) (Num r) = Num (l `div` r)
 treatBinary Rem (Num l) (Num r) = Num (l `mod` r)
 treatBinary Eq (Num l) (Num r) = Boolean (l == r)
