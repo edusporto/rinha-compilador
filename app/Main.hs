@@ -13,8 +13,6 @@ main = do
     Right contents -> tryToEval contents
     Left (_ :: SomeException) -> BL.getContents >>= tryToEval
 
-  pure ()
-
 tryToEval :: BL.ByteString -> IO ()
 tryToEval jsonCode = case interpret jsonCode of
   Left err -> putStrLn ("Error: " <> err)

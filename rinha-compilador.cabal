@@ -58,7 +58,7 @@ library
     , text-show
   default-language: Haskell2010
 
-executable rinha-compilador-exe
+executable interpreter
   main-is: Main.hs
   other-modules:
       Paths_rinha_compilador

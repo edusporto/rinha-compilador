@@ -55,7 +55,7 @@ library:
   source-dirs: src
 
 executables:
-  rinha-compilador-exe:
+  interpreter:
     main:                Main.hs
     source-dirs:         app
     ghc-options:
