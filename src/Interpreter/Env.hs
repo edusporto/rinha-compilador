@@ -9,20 +9,19 @@ module Interpreter.Env
   )
 where
 
-import qualified Data.Map as M
-import Data.Text (Text)
+import qualified Data.IntMap as M
 import {-# SOURCE #-} Syntax.Value (Value)
 
-newtype Env = Env {getMap :: M.Map Text Value}
+newtype Env = Env {getMap :: M.IntMap Value}
   deriving (Show, Eq)
 
-type Binding = (Text, Value)
+type Binding = (Int, Value)
 
 extend :: Binding -> Env -> Env
-extend (name, value) (Env map) = Env (M.insert name value map)
+extend (key, value) (Env map) = Env (M.insert key value map)
 
-lookup :: Text -> Env -> Maybe Value
-lookup name (Env map) = M.lookup name map
+lookup :: Int -> Env -> Maybe Value
+lookup key (Env map) = M.lookup key map
 
 empty :: Env
 empty = Env M.empty

@@ -6,6 +6,7 @@ import qualified Data.Text as T
 import Interpreter (interpret)
 import qualified Interpreter.Env as Env
 import Interpreter.Evaluator
+import Interpreter.Optimizer
 import Syntax.Expr
 import Syntax.Operations
 import Syntax.Value
@@ -40,7 +41,7 @@ evalTests =
   ]
 
 run :: Expr -> (Value, [T.Text])
-run expr = runWriter (eval Env.empty expr)
+run expr = runWriter (eval Env.empty (optimize expr))
 
 programEvaluationTest :: TestName -> FilePath -> (Value, [T.Text]) -> TestTree
 programEvaluationTest programName path expected =

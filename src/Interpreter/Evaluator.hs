@@ -6,12 +6,12 @@ import Control.Monad.Writer (Writer, tell)
 import Data.String.Interpolate.IsString (i)
 import qualified Data.Text as T
 import Interpreter.Env (Env, extend, lookup)
-import Syntax.Expr (Expr (..), Parameter (..))
 import Syntax.Operations (BinaryOp (..))
+import Syntax.OptExpr (IntParameter (..), OptExpr (..))
 import Syntax.Value (Value (..))
 import TextShow
 
-eval :: Env -> Expr -> Writer [T.Text] Value
+eval :: Env -> OptExpr -> Writer [T.Text] Value
 eval env expr = case expr of
   Int val -> return $ Num val
   Str val -> return $ String val
@@ -28,15 +28,15 @@ eval env expr = case expr of
     right <- eval env rhs
     return $ treatBinary op left right
   Function parameters value ->
-    let argNames = map text parameters
+    let argNames = map key parameters
      in return $ Closure argNames value env
-  Let (Parameter name) value next -> do
+  Let (IntParameter paramKey) value next -> do
     evaluated <- eval env value
     case evaluated of
       Closure argNames body oldEnv ->
-        let newClos = Closure argNames body (extend (name, newClos) oldEnv)
+        let newClos = Closure argNames body (extend (paramKey, newClos) oldEnv)
          in eval (Syntax.Value.envClos newClos) next
-      _ -> eval (extend (name, evaluated) env) next
+      _ -> eval (extend (paramKey, evaluated) env) next
   If condition thenBody elseBody -> do
     condResult <- eval env condition
     case condResult of
@@ -72,10 +72,10 @@ eval env expr = case expr of
 
 treatBinary :: BinaryOp -> Value -> Value -> Value
 treatBinary Add (Num l) (Num r) = Num (l + r)
+treatBinary Sub (Num l) (Num r) = Num (l - r)
 treatBinary Add (String l) (Num r) = String (l <> showt r)
 treatBinary Add (Num l) (String r) = String (showt l <> r)
 treatBinary Add (String l) (String r) = String (l <> r)
-treatBinary Sub (Num l) (Num r) = Num (l - r)
 treatBinary Mul (Num l) (Num r) = Num (l * r)
 treatBinary Div (Num l) (Num r) = Num (l `div` r)
 treatBinary Rem (Num l) (Num r) = Num (l `mod` r)

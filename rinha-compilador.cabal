@@ -5,7 +5,7 @@ cabal-version: 1.12
 -- see: https://github.com/sol/hpack
 
 name:           rinha-compilador
-version:        0.1.0.0
+version:        0.1.0.1
 description:    Please see the README on GitHub at <https://github.com/edusporto/rinha-compilador>
 homepage:       https://github.com/edusporto/rinha-compilador#readme
 bug-reports:    https://github.com/edusporto/rinha-compilador/issues
@@ -27,8 +27,10 @@ library
       Interpreter
       Interpreter.Env
       Interpreter.Evaluator
+      Interpreter.Optimizer
       Syntax.Expr
       Syntax.Operations
+      Syntax.OptExpr
       Syntax.Program
       Syntax.Value
   other-modules:
