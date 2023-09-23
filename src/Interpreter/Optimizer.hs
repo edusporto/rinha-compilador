@@ -2,6 +2,7 @@
 
 module Interpreter.Optimizer (optimize) where
 
+import Data.List (foldl')
 import qualified Data.Map as M
 import Data.Text (Text)
 import qualified Syntax.Expr as E
@@ -47,8 +48,8 @@ optimize' m nextKey expr = case expr of
       _ -> optimize' (M.insert name nextKey m) (nextKey + 1)
     saveManyKeys :: [Text] -> (M.Map Text Int, Int)
     saveManyKeys =
-      foldr
-        ( \name (lastMap, key) -> case M.lookup name lastMap of
+      foldl'
+        ( \(lastMap, key) name -> case M.lookup name lastMap of
             Just _ -> (lastMap, key)
             Nothing -> (M.insert name key lastMap, key + 1)
         )
