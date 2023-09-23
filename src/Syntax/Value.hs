@@ -3,6 +3,7 @@
 
 module Syntax.Value (Value (..)) where
 
+import Data.Int (Int32)
 import Data.String.Interpolate (i)
 import Data.Text (Text)
 import Interpreter.Env (Env)
@@ -10,7 +11,7 @@ import Syntax.OptExpr (OptExpr)
 import TextShow
 
 data Value
-  = Num {num :: Int}
+  = Num {num :: Int32}
   | Boolean {bool :: Bool}
   | Closure {argKeys :: [Int], body :: OptExpr, envClos :: Env}
   | Pair {first :: Value, second :: Value}

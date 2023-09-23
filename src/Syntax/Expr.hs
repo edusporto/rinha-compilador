@@ -4,13 +4,14 @@ module Syntax.Expr (Expr (..), Parameter (..)) where
 
 import Data.Aeson
 import Data.Aeson.TH (deriveJSON)
+import Data.Int (Int32)
 import Data.List (isInfixOf)
 import Data.Text (Text)
 import GHC.Generics (Generic)
 import Syntax.Operations (BinaryOp)
 
 data Expr
-  = Int {valueInt :: Int}
+  = Int {valueInt :: Int32}
   | Str {valueStr :: Text}
   | Call {callee :: Expr, arguments :: [Expr]}
   | Binary {lhs :: Expr, op :: BinaryOp, rhs :: Expr}

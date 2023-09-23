@@ -2,12 +2,13 @@
 
 module Syntax.OptExpr (OptExpr (..), IntParameter (..)) where
 
+import Data.Int (Int32)
 import Data.Text (Text)
 import GHC.Generics (Generic)
 import Syntax.Operations (BinaryOp)
 
 data OptExpr
-  = Int {valueInt :: Int}
+  = Int {valueInt :: Int32}
   | Str {valueStr :: Text}
   | Call {callee :: OptExpr, arguments :: [OptExpr]}
   | Binary {lhs :: OptExpr, op :: BinaryOp, rhs :: OptExpr}
