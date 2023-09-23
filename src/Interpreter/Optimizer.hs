@@ -18,8 +18,8 @@ optimize' m nextKey expr = case expr of
     O.Let (O.IntParameter (choose name)) (saveKey name value) (saveKey name next)
   E.Function parameters value ->
     let names = map E.text parameters
-        (m', nextKey') = saveManyKeys names
-        keys = map (m' M.!) names
+        (!m', !nextKey') = saveManyKeys names
+        !keys = map (m' M.!) names
      in O.Function (map O.IntParameter keys) (optimize' m' nextKey' value)
   E.Var textVar -> O.Var (m M.! textVar)
   --------------------------

@@ -3,6 +3,7 @@
 module Interpreter.Evaluator (eval) where
 
 import Control.Monad.Writer (Writer, tell)
+import Data.List (foldl')
 import Data.String.Interpolate.IsString (i)
 import qualified Data.Text as T
 import Interpreter.Env (Env, extend, lookup)
@@ -20,7 +21,7 @@ eval env expr = case expr of
     args <- mapM (eval env) arguments
     case closure of
       Closure argNames body currEnv ->
-        let newEnv = foldr extend currEnv (zip argNames args)
+        let !newEnv = foldl' (flip extend) currEnv (zip argNames args)
          in eval newEnv body
       _ -> error [i|Can't call "#{closure}"|]
   Binary lhs op rhs -> do
@@ -65,7 +66,7 @@ eval env expr = case expr of
     right <- eval env r
     return $ Pair left right
   Var name ->
-    let result = Interpreter.Env.lookup name env
+    let !result = Interpreter.Env.lookup name env
      in case result of
           Nothing -> error [i|can't find variable #{name}|]
           Just val -> return val
@@ -88,3 +89,4 @@ treatBinary Gte (Num l) (Num r) = Boolean (l >= r)
 treatBinary And (Boolean l) (Boolean r) = Boolean (l && r)
 treatBinary Or (Boolean l) (Boolean r) = Boolean (l || r)
 treatBinary op l r = error [i|Invalid op "#{op}" for "#{l}" and "#{r}"|]
+{-# INLINE treatBinary #-}

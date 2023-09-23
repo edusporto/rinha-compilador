@@ -39,6 +39,7 @@ default-extensions:
 - QuasiQuotes
 - StandaloneDeriving
 - ScopedTypeVariables
+- BangPatterns
 
 ghc-options:
 - -Wall

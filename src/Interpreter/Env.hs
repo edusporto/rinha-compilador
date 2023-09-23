@@ -19,9 +19,12 @@ type Binding = (Int, Value)
 
 extend :: Binding -> Env -> Env
 extend (key, value) (Env map) = Env (M.insert key value map)
+{-# INLINE extend #-}
 
 lookup :: Int -> Env -> Maybe Value
 lookup key (Env map) = M.lookup key map
+{-# INLINE lookup #-}
 
 empty :: Env
 empty = Env M.empty
+{-# INLINE empty #-}
