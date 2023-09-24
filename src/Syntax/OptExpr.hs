@@ -7,6 +7,7 @@ import Data.Text (Text)
 import GHC.Generics (Generic)
 import Syntax.Operations (BinaryOp)
 
+-- Didn't really help all that much...
 data OptExpr
   = Int {valueInt :: Int32}
   | Str {valueStr :: Text}

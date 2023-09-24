@@ -7,13 +7,13 @@ import Data.Int (Int32)
 import Data.String.Interpolate (i)
 import Data.Text (Text)
 import Interpreter.Env (Env)
-import Syntax.OptExpr (OptExpr)
+import Syntax.Expr (Expr)
 import TextShow
 
 data Value
   = Num {num :: Int32}
   | Boolean {bool :: Bool}
-  | Closure {argKeys :: [Int], body :: OptExpr, envClos :: Env}
+  | Closure {argKeys :: [Text], body :: Expr, envClos :: Env}
   | Pair {first :: Value, second :: Value}
   | String {value :: Text}
   deriving (Show, Eq)

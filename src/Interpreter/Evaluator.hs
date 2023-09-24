@@ -7,12 +7,12 @@ import Data.List (foldl')
 import Data.String.Interpolate.IsString (i)
 import qualified Data.Text as T
 import Interpreter.Env (Env, extend, lookup)
+import Syntax.Expr (Expr (..), Parameter (..))
 import Syntax.Operations (BinaryOp (..))
-import Syntax.OptExpr (IntParameter (..), OptExpr (..))
 import Syntax.Value (Value (..))
 import TextShow
 
-eval :: Env -> OptExpr -> Writer [T.Text] Value
+eval :: Env -> Expr -> Writer [T.Text] Value
 eval env expr = case expr of
   Int val -> return $ Num val
   Str val -> return $ String val
@@ -29,9 +29,9 @@ eval env expr = case expr of
     right <- eval env rhs
     return $ treatBinary op left right
   Function parameters value ->
-    let argNames = map key parameters
+    let argNames = map text parameters
      in return $ Closure argNames value env
-  Let (IntParameter paramKey) value next -> do
+  Let (Parameter paramKey) value next -> do
     evaluated <- eval env value
     case evaluated of
       Closure argNames body oldEnv ->
