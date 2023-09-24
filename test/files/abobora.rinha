@@ -1,0 +1,8 @@
+let abobora = fn () => { 1 };
+let pimentao = fn () => { 2 };
+let n = abobora();
+let plus_n = fn(x) => {
+  n + x
+};
+let n = pimentao();
+print(plus_n(5))

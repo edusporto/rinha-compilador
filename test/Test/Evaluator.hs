@@ -27,16 +27,20 @@ evalTests =
       run (Binary (Bool True) Neq (Bool False)) @?= (Boolean True, []),
     programEvaluationTest
       "Fibonacci"
-      "rinha-de-compiler/files/fib.json"
+      "test/files/fib.json"
       (Num 55, ["55"]),
     programEvaluationTest
       "Combination"
-      "rinha-de-compiler/files/combination.json"
+      "test/files/combination.json"
       (Num 45, ["45"]),
     programEvaluationTest
       "Sum"
-      "rinha-de-compiler/files/sum.json"
-      (Num 15, ["15"])
+      "test/files/sum.json"
+      (Num 15, ["15"]),
+    programEvaluationTest
+      "Scoping"
+      "test/files/abobora.json"
+      (Num 6, ["6"])
   ]
 
 run :: Expr -> (Value, [T.Text])
